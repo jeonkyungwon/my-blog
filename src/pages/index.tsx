@@ -1,13 +1,26 @@
-"use client";
-
 import Navbar from "@/components/Navbar";
+import { getAllPostsMeta } from "@/lib/posts";
+import PostCard from "@/components/PostCard";
+import { PostMeta } from "@/lib/posts";
 
-export default function Home() {
+export async function getStaticProps() {
+  const posts = getAllPostsMeta();
+  return {
+    props: { posts },
+  };
+}
+
+export default function Home({ posts }: { posts: PostMeta[] }) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex flex-col items-center justify-center gap-6 bg-white dark:bg-gray-900 text-black dark:text-white">
-        <h1 className="text-2xl font-bold">홈페이지 다크모드 테스트 🌙</h1>
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">📚 최신 글</h1>
+        <div className="grid gap-6 md:grid-cols-2">
+          {posts.slice(0, 2).map((post) => (
+            <PostCard key={post.slug} {...post} />
+          ))}
+        </div>
       </main>
     </>
   );
