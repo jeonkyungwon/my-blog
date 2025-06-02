@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import { getAllPostsMeta } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import { PostMeta } from "@/lib/posts";
+import Footer from "@/components/Footer";
 
 export async function getStaticProps() {
   const posts = getAllPostsMeta();
@@ -22,6 +23,7 @@ export default function Home({ posts }: { posts: PostMeta[] }) {
           ))}
         </div>
       </main>
+      <Footer />
     </>
   );
 }

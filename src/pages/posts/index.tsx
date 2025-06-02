@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import { getAllPostsMeta, PostMeta } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllPostsMeta();
@@ -24,6 +25,7 @@ export default function PostListPage({ posts }: { posts: PostMeta[] }) {
           ))}
         </div>
       </main>
+      <Footer />
     </>
   );
 }
