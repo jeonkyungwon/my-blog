@@ -4,9 +4,6 @@ import matter from "gray-matter";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-
 import Navbar from "@/components/Navbar";
 import TableOfContents from "@/components/TableOfContents";
 import CustomNote from "@/components/CustomNote";
