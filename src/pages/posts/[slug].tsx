@@ -1,11 +1,12 @@
-// src/pages/posts/[slug].tsx
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+
 import Navbar from "@/components/Navbar";
 import TableOfContents from "@/components/TableOfContents";
 import CustomNote from "@/components/CustomNote";
@@ -48,8 +49,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { content, data } = matter(raw);
 
-  const mdxSource = await serialize(content);
-  const toc = extractToc(content); // 🔥 목차 추출
+  const rehypeSlug = (await import("rehype-slug")).default;
+  const rehypeAutolink = (await import("rehype-autolink-headings")).default;
+
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      rehypePlugins: [rehypeSlug, [rehypeAutolink, { behavior: "wrap" }]],
+    },
+  });
+
+  const toc = extractToc(content);
   const title = data.title ?? slug;
 
   return {

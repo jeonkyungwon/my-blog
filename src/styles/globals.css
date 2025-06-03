@@ -132,4 +132,23 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .prose h2,
+  .prose h3 {
+    scroll-margin-top: 80px; /* 또는 네비게이션 높이에 맞게 조절 */
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a.anchor {
+  display: inline-block;
+  margin-right: 0.5rem;
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+}
+a.anchor:hover {
+  opacity: 1;
 }

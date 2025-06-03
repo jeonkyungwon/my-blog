@@ -6,7 +6,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // 기타 옵션들
+  pageExtensions: ["ts", "tsx", "mdx"],
 };
 
 export default withMDX({

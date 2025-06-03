@@ -8,6 +8,14 @@ export type TocItem = {
   level: number;
 };
 
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w가-힣\s-]/g, "")
+    .replace(/\s+/g, "-");
+}
+
 export function extractToc(markdown: string): TocItem[] {
   const tree = fromMarkdown(markdown);
   const toc: TocItem[] = [];
@@ -19,7 +27,7 @@ export function extractToc(markdown: string): TocItem[] {
         .filter((c): c is Text => c.type === "text")
         .map((c) => c.value)
         .join("");
-      const id = text.toLowerCase().replace(/\s+/g, "-");
+      const id = slugify(text);
       toc.push({ id, text, level: depth });
     }
   });
