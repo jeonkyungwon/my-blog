@@ -1,5 +1,3 @@
-// src/lib/posts.ts
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -13,6 +11,7 @@ export type PostMeta = {
   description: string;
   image: string;
   tags: string[];
+  featured?: boolean;
 };
 
 // 슬러그 기반으로 글 가져오기 + 목차 추출
@@ -57,4 +56,10 @@ export function getAllPostsMeta(): PostMeta[] {
 
   // 최신 글이 위로 오도록 정렬
   return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+// ✅ 추천 글만 필터링
+export function getFeaturedPosts(): PostMeta[] {
+  const allPosts = getAllPostsMeta();
+  return allPosts.filter((post) => post.featured);
 }

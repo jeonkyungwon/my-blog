@@ -1,24 +1,31 @@
+import { GetStaticProps } from "next";
 import Navbar from "@/components/Navbar";
-import { getAllPostsMeta } from "@/lib/posts";
-import PostCard from "@/components/PostCard";
-import { PostMeta } from "@/lib/posts";
 import Footer from "@/components/Footer";
+import PostCard from "@/components/PostCard";
+import { getFeaturedPosts } from "@/lib/posts";
+import { PostMeta } from "@/lib/posts";
 
-export async function getStaticProps() {
-  const posts = getAllPostsMeta();
-  return {
-    props: { posts },
-  };
+interface Props {
+  featuredPosts: PostMeta[];
 }
 
-export default function Home({ posts }: { posts: PostMeta[] }) {
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const featuredPosts = getFeaturedPosts();
+  return {
+    props: {
+      featuredPosts,
+    },
+  };
+};
+
+export default function Home({ featuredPosts }: Props) {
   return (
     <>
       <Navbar />
       <main className="max-w-5xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">📚 최신 글</h1>
+        <h1 className="text-3xl font-bold mb-6">✨ 추천 글</h1>
         <div className="grid gap-6 md:grid-cols-2">
-          {posts.slice(0, 2).map((post) => (
+          {featuredPosts.map((post) => (
             <PostCard key={post.slug} {...post} />
           ))}
         </div>
