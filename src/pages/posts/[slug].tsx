@@ -4,7 +4,6 @@ import matter from "gray-matter";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import Navbar from "@/components/Navbar";
 import TableOfContents from "@/components/TableOfContents";
 import CustomNote from "@/components/CustomNote";
 import { extractToc, TocItem } from "@/lib/toc";
@@ -18,7 +17,6 @@ interface Props {
 export default function PostPage({ source, toc, title }: Props) {
   return (
     <>
-      <Navbar />
       <div className="max-w-6xl mx-auto grid md:grid-cols-[3fr_1fr] gap-12 px-4 py-8">
         <article className="prose dark:prose-invert">
           <h1>{title}</h1>

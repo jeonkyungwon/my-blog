@@ -1,6 +1,4 @@
 import { GetStaticProps } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PostCard from "@/components/PostCard";
 import { getFeaturedPosts } from "@/lib/posts";
 import { PostMeta } from "@/lib/posts";
@@ -21,7 +19,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 export default function Home({ featuredPosts }: Props) {
   return (
     <>
-      <Navbar />
       <main className="max-w-5xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">✨ 추천 글</h1>
         <div className="grid gap-6 md:grid-cols-2">
@@ -30,7 +27,6 @@ export default function Home({ featuredPosts }: Props) {
           ))}
         </div>
       </main>
-      <Footer />
     </>
   );
 }
