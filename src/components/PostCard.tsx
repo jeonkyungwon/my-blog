@@ -38,7 +38,7 @@ export default function PostCard({
                 key={tag}
                 className="px-2 py-0.5 rounded text-xs bg-muted text-muted-foreground"
               >
-                #{tag}
+                {tag}
               </span>
             ))}
           </div>
