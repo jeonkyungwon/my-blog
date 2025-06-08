@@ -23,7 +23,13 @@ interface Props {
 export default function PostPage({ source, toc, title, prev, next }: Props) {
   return (
     <>
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[3fr_1fr] gap-12 px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 md:space-y-0 md:grid md:grid-cols-[3fr_1fr] md:gap-12">
+        {/* ✅ 모바일 전용 목차 */}
+        <div className="block md:hidden">
+          <TableOfContents toc={toc} />
+        </div>
+
+        {/* ✅ 본문 */}
         <article className="prose dark:prose-invert break-words overflow-hidden">
           <h1>{title}</h1>
           <MDXRemote {...source} components={{ CustomNote }} />
@@ -59,7 +65,11 @@ export default function PostPage({ source, toc, title, prev, next }: Props) {
             )}
           </div>
         </article>
-        <TableOfContents toc={toc} />
+
+        {/* ✅ 데스크탑 전용 목차 */}
+        <div className="hidden md:block">
+          <TableOfContents toc={toc} />
+        </div>
       </div>
     </>
   );
