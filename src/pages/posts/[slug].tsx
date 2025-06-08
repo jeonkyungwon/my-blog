@@ -4,23 +4,60 @@ import matter from "gray-matter";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
+import Link from "next/link";
+
 import TableOfContents from "@/components/TableOfContents";
 import CustomNote from "@/components/CustomNote";
 import { extractToc, TocItem } from "@/lib/toc";
+import { getAdjacentPosts } from "@/lib/posts";
+import type { PostMeta } from "@/lib/posts";
 
 interface Props {
   source: MDXRemoteSerializeResult;
   toc: TocItem[];
   title: string;
+  prev: PostMeta | null;
+  next: PostMeta | null;
 }
 
-export default function PostPage({ source, toc, title }: Props) {
+export default function PostPage({ source, toc, title, prev, next }: Props) {
   return (
     <>
       <div className="max-w-6xl mx-auto grid md:grid-cols-[3fr_1fr] gap-12 px-4 py-8">
         <article className="prose dark:prose-invert break-words overflow-hidden">
           <h1>{title}</h1>
           <MDXRemote {...source} components={{ CustomNote }} />
+
+          {/* 이전/다음 글 네비게이션 */}
+          <div className="flex justify-between mt-12 pt-6 border-t border-border">
+            {prev ? (
+              <div>
+                <div className="text-sm text-muted-foreground">← 이전 글</div>
+                <Link
+                  href={`/posts/${prev.slug}`}
+                  className="hover:underline text-primary"
+                >
+                  {prev.title}
+                </Link>
+              </div>
+            ) : (
+              <div />
+            )}
+
+            {next ? (
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">다음 글 →</div>
+                <Link
+                  href={`/posts/${next.slug}`}
+                  className="hover:underline text-primary"
+                >
+                  {next.title}
+                </Link>
+              </div>
+            ) : (
+              <div />
+            )}
+          </div>
         </article>
         <TableOfContents toc={toc} />
       </div>
@@ -55,12 +92,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const toc = extractToc(content);
   const title = data.title ?? slug;
+  const { prev, next } = getAdjacentPosts(slug);
 
   return {
     props: {
       source: mdxSource,
       toc,
       title,
+      prev,
+      next,
     },
   };
 };

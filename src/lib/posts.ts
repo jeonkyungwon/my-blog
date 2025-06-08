@@ -63,3 +63,16 @@ export function getFeaturedPosts(): PostMeta[] {
   const allPosts = getAllPostsMeta();
   return allPosts.filter((post) => post.featured);
 }
+
+export function getAdjacentPosts(slug: string): {
+  prev: PostMeta | null;
+  next: PostMeta | null;
+} {
+  const posts = getAllPostsMeta();
+  const index = posts.findIndex((post) => post.slug === slug);
+
+  const prev = index < posts.length - 1 ? posts[index + 1] : null;
+  const next = index > 0 ? posts[index - 1] : null;
+
+  return { prev, next };
+}
