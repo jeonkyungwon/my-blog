@@ -18,7 +18,7 @@ export default function PostPage({ source, toc, title }: Props) {
   return (
     <>
       <div className="max-w-6xl mx-auto grid md:grid-cols-[3fr_1fr] gap-12 px-4 py-8">
-        <article className="prose dark:prose-invert">
+        <article className="prose dark:prose-invert break-words overflow-hidden">
           <h1>{title}</h1>
           <MDXRemote {...source} components={{ CustomNote }} />
         </article>
