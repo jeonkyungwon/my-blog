@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function IntroCard() {
   return (
-    <Card className="mb-16 mt-4">
+    <Card className="mb-16 mt-4 py-6">
       <CardContent className="flex flex-col justify-between h-full">
         <div className="mb-6">
           <p className="text-base font-medium text-foreground">Jeon Kyungwon</p>
