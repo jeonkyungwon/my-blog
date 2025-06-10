@@ -13,7 +13,7 @@ export default function TagFilter({
   onSelect,
 }: TagFilterProps) {
   return (
-    <div className="flex flex-wrap gap-2 mb-4">
+    <div className="flex flex-wrap gap-2 mb-8">
       <Button
         variant={selectedTag === null ? "default" : "outline"}
         onClick={() => onSelect(null)}
