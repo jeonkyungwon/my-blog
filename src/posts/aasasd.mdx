@@ -1,0 +1,40 @@
+---
+title: 스크롤스파이 데모 글
+date: "2025-06-11"
+description: 목차 기능과 스크롤스파이를 테스트하기 위한 데모 글입니다.
+tags: ["scrollspy", "toc", "blog", "demo"]
+---
+
+## 1. 개요
+
+이 문서는 scrollspy와 목차 기능을 테스트하기 위해 만들어졌습니다.  
+제목이 많은 글일수록 목차의 필요성은 더 커지며, 사용자가 콘텐츠를 탐색하는 데에 큰 도움이 됩니다.
+
+## 2. 스크롤스파이란?
+
+스크롤스파이는 사용자가 페이지를 스크롤할 때  
+현재 보고 있는 위치에 따라 UI 요소(예: 목차)를 동적으로 업데이트해주는 기능입니다.
+
+### 2.1 작동 원리
+
+- Intersection Observer API를 사용해 요소가 화면에 보이는지를 감지
+- 현재 화면에서 가장 중심에 가까운 heading을 active로 표시
+
+## 3. React에서의 구현
+
+React에서는 scrollspy를 직접 구현할 수 있으며,  
+보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
+
+### 3.1 useActiveSection 훅
+
+```ts
+function useActiveSection(ids: string[]) {
+  const [activeId, setActiveId] = useState(null);
+
+  useEffect(() => {
+    // observer 등록...
+  }, [ids]);
+
+  return activeId;
+}
+```

@@ -5,7 +5,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Link from "next/link";
-
+import MdxContentLayout from "@/components/mdx/MdxContentLayout";
 import TableOfContents from "@/components/TableOfContents";
 import CustomNote from "@/components/CustomNote";
 import { extractToc, TocItem } from "@/lib/toc";
@@ -30,10 +30,11 @@ export default function PostPage({ source, toc, title, prev, next }: Props) {
         </div>
 
         {/* ✅ 본문 */}
-        <article className="prose dark:prose-invert break-words overflow-hidden">
-          <h1>{title}</h1>
-          <MDXRemote {...source} components={{ CustomNote }} />
-
+        <article className="prose max-w-none">
+          <h1 className="text-3xl font-bold mb-4">{title}</h1>
+          <MdxContentLayout>
+            <MDXRemote {...source} components={{ CustomNote }} />
+          </MdxContentLayout>
           {/* 이전/다음 글 네비게이션 */}
           <div className="flex justify-between mt-12 pt-6 border-t border-border">
             {prev ? (
