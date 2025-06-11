@@ -24,23 +24,28 @@ export default function PostCard({
 }: Props) {
   return (
     <Link href={`/posts/${slug}`} className="block hover:opacity-90 transition">
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden h-full flex flex-col">
         <AspectRatio ratio={16 / 9}>
           <Image src={image} alt={title} fill className="object-cover" />
         </AspectRatio>
-        <CardContent className="space-y-2 p-4">
-          <p className="text-sm text-muted-foreground">{date}</p>
-          <h2 className="text-xl font-semibold">{title}</h2>
-          <p className="text-sm text-muted-foreground">{description}</p>
-          <div className="flex flex-wrap gap-2 pt-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2 py-0.5 rounded text-xs bg-muted text-muted-foreground"
-              >
-                {tag}
-              </span>
-            ))}
+
+        <CardContent className="flex-1 flex flex-col justify-between p-4">
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-4">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 rounded text-xs bg-muted text-muted-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
+              <p className="text-sm text-muted-foreground">{date}</p>
+            </div>
+            <h2 className="text-xl font-semibold line-clamp-2 mb-4">{title}</h2>
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {description}
+            </p>
           </div>
         </CardContent>
       </Card>
