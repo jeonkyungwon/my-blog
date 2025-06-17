@@ -189,9 +189,25 @@ body {
   body {
     @apply bg-background text-foreground font-sans;
   }
+  .prose h1,
   .prose h2,
   .prose h3 {
     scroll-margin-top: 80px; /* 또는 네비게이션 높이에 맞게 조절 */
+  }
+
+  .prose h1 {
+    font-size: 2.25rem !important; /* 36px */
+    font-weight: 700 !important;
+  }
+
+  .prose h2 {
+    font-size: 1.875rem !important; /* 30px */
+    font-weight: 600 !important;
+  }
+
+  .prose h3 {
+    font-size: 1.5rem !important; /* 24px */
+    font-weight: 600 !important;
   }
 }
 
@@ -210,16 +226,44 @@ a.anchor:hover {
   opacity: 1;
 }
 
-.prose pre {
-  background-color: #1e1e1e;
-  padding: 1rem;
+/* 코드 블록 스타일 */
+pre[data-theme] {
+  background-color: #0d1117; /* github-dark와 유사한 배경 */
+  padding: 1.25rem;
   border-radius: 0.5rem;
-  font-size: 0.9rem;
+  overflow-x: auto;
+  font-family: "Fira Code", "Source Code Pro", monospace;
+  font-size: 0.875rem;
 }
 
-.prose code {
-  background-color: rgba(135, 131, 120, 0.15);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.3rem;
-  font-size: 0.9em;
+/* 코드 텍스트 */
+code[data-theme] {
+  color: #c9d1d9; /* github-dark 기본 텍스트 색 */
+  line-height: 1.6;
+}
+
+/* 한 줄 스타일 */
+span.line {
+  display: block;
+  padding-left: 1rem;
+  position: relative;
+}
+
+/* 줄 번호 (옵션) */
+span.line[data-line-number]::before {
+  content: attr(data-line-number);
+  position: absolute;
+  left: 0;
+  width: 2rem;
+  text-align: right;
+  color: #8b949e;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+/* 강조 줄 (optional: rehype-pretty-code에서 지정 시) */
+span.line.highlighted {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 2px solid #58a6ff;
+  padding-left: 0.75rem;
 }

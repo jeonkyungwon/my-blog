@@ -94,10 +94,26 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const rehypeSlug = (await import("rehype-slug")).default;
   const rehypeAutolink = (await import("rehype-autolink-headings")).default;
+  const rehypePrettyCode = (await import("rehype-pretty-code")).default;
 
   const mdxSource = await serialize(content, {
     mdxOptions: {
-      rehypePlugins: [rehypeSlug, [rehypeAutolink, { behavior: "wrap" }]],
+      format: "mdx",
+      rehypePlugins: [
+        rehypeSlug,
+        [rehypeAutolink, { behavior: "wrap" }],
+        [
+          rehypePrettyCode,
+          {
+            theme: {
+              dark: "github-dark",
+              light: "github-light",
+            },
+            keepBackground: false,
+            defaultLang: "ts",
+          },
+        ],
+      ],
     },
   });
 
