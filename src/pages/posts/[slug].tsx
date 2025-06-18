@@ -12,63 +12,98 @@ import { extractToc, TocItem } from "@/lib/toc";
 import { getAdjacentPosts } from "@/lib/posts";
 import type { PostMeta } from "@/lib/posts";
 
+interface Frontmatter {
+  title: string;
+  date?: string;
+  tags?: string[];
+}
+
 interface Props {
   source: MDXRemoteSerializeResult;
   toc: TocItem[];
   title: string;
   prev: PostMeta | null;
   next: PostMeta | null;
+  frontmatter: Frontmatter;
 }
 
-export default function PostPage({ source, toc, title, prev, next }: Props) {
+export default function PostPage({
+  source,
+  toc,
+  title,
+  prev,
+  next,
+  frontmatter,
+}: Props) {
   return (
     <>
-      <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 md:space-y-0 md:grid md:grid-cols-[3fr_1fr] md:gap-12">
-        {/* ✅ 모바일 전용 목차 */}
-        <div className="block md:hidden">
-          <TableOfContents toc={toc} />
-        </div>
+      <div className="relative">
+        {/* 본문 */}
+        <div className="max-w-3xl mx-auto px-4 py-8">
+          {/* 제목 */}
+          <h1 className="text-3xl font-bold mb-2">{title}</h1>
 
-        {/* ✅ 본문 */}
-        <article className="prose max-w-none">
-          <h1 className="text-3xl font-bold mb-4">{title}</h1>
-          <MdxContentLayout>
-            <MDXRemote {...source} components={{ CustomNote }} />
-          </MdxContentLayout>
-          {/* 이전/다음 글 네비게이션 */}
-          <div className="flex justify-between mt-12 pt-6 border-t border-border">
-            {prev ? (
-              <div>
-                <div className="text-sm text-muted-foreground">← 이전 글</div>
-                <Link
-                  href={`/posts/${prev.slug}`}
-                  className="hover:underline text-primary"
-                >
-                  {prev.title}
-                </Link>
-              </div>
-            ) : (
-              <div />
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
+            {/* ✅ 태그 배열의 첫 번째를 category처럼 사용 */}
+            {frontmatter.tags && frontmatter.tags[0] && (
+              <span className="text-pink-500 font-semibold">
+                {frontmatter.tags[0]}
+              </span>
             )}
-
-            {next ? (
-              <div className="text-right">
-                <div className="text-sm text-muted-foreground">다음 글 →</div>
-                <Link
-                  href={`/posts/${next.slug}`}
-                  className="hover:underline text-primary"
-                >
-                  {next.title}
-                </Link>
+            {frontmatter.date && (
+              <div className="flex items-center gap-1">
+                <span></span>
+                <time dateTime={frontmatter.date}>{frontmatter.date}</time>
               </div>
-            ) : (
-              <div />
             )}
           </div>
-        </article>
 
-        {/* ✅ 데스크탑 전용 목차 */}
-        <div className="hidden md:block">
+          {/* 모바일 전용 목차 */}
+          <div className="block xl:hidden mb-8">
+            <TableOfContents toc={toc} />
+          </div>
+
+          {/* 본문 내용 */}
+          <article className="prose max-w-none">
+            <MdxContentLayout>
+              <MDXRemote {...source} components={{ CustomNote }} />
+            </MdxContentLayout>
+
+            {/* 이전/다음 글 */}
+            <div className="flex justify-between items-start w-full mt-12 pt-6 border-t border-border">
+              {prev ? (
+                <div className="max-w-sm">
+                  <div className="text-sm text-muted-foreground">← 이전 글</div>
+                  <Link
+                    href={`/posts/${prev.slug}`}
+                    className="hover:underline text-primary"
+                  >
+                    {prev.title}
+                  </Link>
+                </div>
+              ) : (
+                <div />
+              )}
+
+              {next ? (
+                <div className="max-w-sm text-right">
+                  <div className="text-sm text-muted-foreground">다음 글 →</div>
+                  <Link
+                    href={`/posts/${next.slug}`}
+                    className="hover:underline text-primary"
+                  >
+                    {next.title}
+                  </Link>
+                </div>
+              ) : (
+                <div />
+              )}
+            </div>
+          </article>
+        </div>
+
+        {/* 데스크탑 전용 목차 */}
+        <div className="hidden xl:block fixed top-24 right-12 w-64 max-h-[80vh] overflow-auto">
           <TableOfContents toc={toc} />
         </div>
       </div>
@@ -128,6 +163,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       title,
       prev,
       next,
+      frontmatter: {
+        title,
+        date: data.date ?? null,
+        tags: data.tags ?? [],
+      },
     },
   };
 };
