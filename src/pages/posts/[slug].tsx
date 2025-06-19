@@ -39,20 +39,18 @@ export default function PostPage({
     <>
       <div className="relative">
         {/* 본문 */}
-        <div className="max-w-3xl mx-auto px-4 py-8">
+        <div className="max-w-3xl mx-auto px-4 py-16">
           {/* 제목 */}
-          <h1 className="text-3xl font-bold mb-2">{title}</h1>
+          <h1 className="text-4xl font-bold mb-8">{title}</h1>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
-            {/* ✅ 태그 배열의 첫 번째를 category처럼 사용 */}
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-32">
             {frontmatter.tags && frontmatter.tags[0] && (
-              <span className="text-pink-500 font-semibold">
+              <span className="text-blue-500 font-semibold">
                 {frontmatter.tags[0]}
               </span>
             )}
             {frontmatter.date && (
               <div className="flex items-center gap-1">
-                <span></span>
                 <time dateTime={frontmatter.date}>{frontmatter.date}</time>
               </div>
             )}
@@ -70,7 +68,7 @@ export default function PostPage({
             </MdxContentLayout>
 
             {/* 이전/다음 글 */}
-            <div className="flex justify-between items-start w-full mt-12 pt-6 border-t border-border">
+            <div className="flex justify-between items-start w-full mt-12 pt-4 border-t-4 border-border ">
               {prev ? (
                 <div className="max-w-sm">
                   <div className="text-sm text-muted-foreground">← 이전 글</div>

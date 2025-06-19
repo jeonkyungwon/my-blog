@@ -189,6 +189,26 @@ body {
   body {
     @apply bg-background text-foreground font-sans;
   }
+  hr {
+    @apply border-0 h-[1px] my-12;
+    position: relative;
+    background-color: transparent;
+  }
+
+  hr::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #dce9f5;
+    opacity: 0.8;
+  }
+  .dark hr::before {
+    background-color: #062745;
+  }
+
   .prose h1,
   .prose h2,
   .prose h3 {

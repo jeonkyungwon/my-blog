@@ -1,81 +1,54 @@
 ---
-title: "스크롤스파이 데모 글"
-date: "2025-06-02"
-description: "목차 기능과 스크롤스파이를 테스트하기 위한 데모 글입니다."
+title: "ScrollSpy 기능 테스트"
+date: "2025-06-03"
+description: "스크롤스파이와 목차 기능을 테스트하는 긴 글입니다."
 image: "/images/hello-thumbnail.jpeg"
-tags: ["test"]
+tags: ["frontend"]
 featured: true
 ---
 
-## 1. 개요
+## 프로젝트 개요
 
-이 문서는 scrollspy와 목차 기능을 테스트하기 위해 만들어졌습니다.  
-제목이 많은 글일수록 목차의 필요성은 더 커지며,  
-사용자가 콘텐츠를 탐색하는 데에 큰 도움이 됩니다.
+이번 프로젝트는 슬랙/디스코드에서 사용할 수 있는 **텍스트 기반 이모지 생성기**를 개발하는 것이었습니다.
 
----
+> 사용자가 입력한 텍스트에 애니메이션을 적용하고, 이를 **GIF**로 변환하는 기능을 구현하는 것이 핵심이었습니다.
 
-## 2. 스크롤스파이란?
+<hr />
 
-스크롤스파이는 사용자가 페이지를 스크롤할 때  
-현재 보고 있는 위치에 따라 UI 요소(예: 목차)를 동적으로 업데이트해주는 기능입니다.
+### 핵심 요구사항
 
-### 2.1 작동 원리
+- `Canvas API`를 활용해 텍스트 애니메이션 구현
+- 다양한 이펙트(Scale, Bounce, Shake 등) 적용
+- 애니메이션 결과를 **GIF로 내보내기**
 
-- Intersection Observer API를 사용해 요소가 화면에 보이는지를 감지
-- 현재 화면에서 가장 중심에 가까운 heading을 active로 표시
+<hr />
 
----
+## 기술적 접근
 
-## 3. React에서의 구현
+**html2canvas** 대신, 더 유연한 **Canvas API**를 사용했습니다.  
+텍스트 애니메이션은 `requestAnimationFrame`으로 구현했고, GIF 변환은 `gif.js` 라이브러리를 활용했습니다.
 
-React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
+<span style={{ color: "red" }}>강조할 텍스트</span>
+<span style={{ backgroundColor: "yellow" }}>텍스트</span>
 
-### 3.1 useActiveSection 훅
+<hr />
 
-```ts
-function useActiveSection(ids: string[]) {
-  const [activeId, setActiveId] = useState(null);
+## 어려웠던 점
 
-  useEffect(() => {
-    // observer 등록...
-  }, [ids]);
+<span className="bg-yellow-200 text-black inline-block">
+  사용자 입력 → 애니메이션 적용 이를 gif로 변환하는 것
+</span>
 
-  return activeId;
-}
-```
+<span style={{ backgroundColor: "yellow" }}>
+  사용자가 텍스트를 입력하면 해당 텍스트에 애니메이션을 적용하고, 이를 gif로
+  변환하는 것
+</span>
+이 단순해 보이지만, **DOM 렌더링 → 캡처 → 인코딩**의 순환 구조로 인해 최적화가 어려웠습니다.
 
-### 3.2 use
+또한 <u>글자 움직임을 렌더링하면서도 부드럽게 캡처되는 타이밍</u>을 맞추는 것이 가장 까다로운 포인트였습니다.
 
-React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
-React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
-ㅍ
-ㅍ
-ㅍ
-ㅍ
-ㅍ
-ㅍReact에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
+<hr />
 
-### 3.3 useasdad
+## 마무리
 
-React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
-
-### 3.4 useasdasdasdasdasd
-
-React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.React에서는 scrollspy를 직접 구현할 수 있으며,  
-보통 커스텀 훅(`useActiveSection`)을 만들어 추상화합니다.
-
-## 4 ㅁㄴ아민어;
+이 프로젝트를 통해 **Canvas API**, 프레임 렌더링, 인코딩 최적화 등에 대한 깊은 이해를 얻게 되었습니다.
