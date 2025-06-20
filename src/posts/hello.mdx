@@ -1,18 +1,20 @@
 ---
-title: "Next.js 블로그 시작하기"
-date: "2025-05-28"
-description: "Next.js, MDX, Tailwind로 블로그를 만드는 첫 번째 포스트입니다."
+title: "ScrollSpy 기능 테스트"
+date: "2025-06-03"
+description: "스크롤스파이와 목차 기능을 테스트하는 긴 글입니다."
 image: "/images/hello-thumbnail.jpeg"
-tags: ["nextjs"]
+tags: ["frontend"]
 ---
 
-# Next.js 블로그 시작하기
+## Prism 코드 하이라이팅 테스트
 
-이 글은 **Next.js + MDX** 조합으로 블로그를 만드는 프로젝트의 첫 번째 글입니다.  
-TailwindCSS와 shadcn/ui도 함께 사용하며 다크모드와 카드형 글 리스트를 구성합니다.
+다음은 TypeScript 예시입니다:
 
-## 소개
+```tsx
+import React, { useState } from "react";
 
-- 프레임워크: Next.js 14 (App Router)
-- 스타일: Tailwind CSS + shadcn/ui
-- 렌더링: SSG + MDX
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
+}
+```

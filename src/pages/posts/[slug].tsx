@@ -56,11 +56,6 @@ export default function PostPage({
             )}
           </div>
 
-          {/* 모바일 전용 목차
-          <div className="block xl:hidden mb-8">
-            <TableOfContents toc={toc} />
-          </div> */}
-
           {/* 본문 내용 */}
           <article className="prose max-w-none">
             <MdxContentLayout>
@@ -127,26 +122,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const rehypeSlug = (await import("rehype-slug")).default;
   const rehypeAutolink = (await import("rehype-autolink-headings")).default;
-  const rehypePrettyCode = (await import("rehype-pretty-code")).default;
+  const remarkPrism = (await import("remark-prism")).default;
 
   const mdxSource = await serialize(content, {
     mdxOptions: {
       format: "mdx",
-      rehypePlugins: [
-        rehypeSlug,
-        [rehypeAutolink, { behavior: "wrap" }],
-        [
-          rehypePrettyCode,
-          {
-            theme: {
-              dark: "github-dark",
-              light: "github-light",
-            },
-            keepBackground: false,
-            defaultLang: "ts",
-          },
-        ],
-      ],
+      remarkPlugins: [remarkPrism],
+      rehypePlugins: [rehypeSlug, [rehypeAutolink, { behavior: "wrap" }]],
     },
   });
 

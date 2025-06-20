@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+@import "prismjs/themes/prism-okaidia.css";
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -221,13 +221,15 @@ body {
   }
 
   .prose h2 {
-    font-size: 1.875rem !important; /* 30px */
+    font-size: 1.875rem !important;
     font-weight: 600 !important;
+    margin-bottom: 0.8rem;
   }
 
   .prose h3 {
-    font-size: 1.5rem !important; /* 24px */
+    font-size: 1.5rem !important;
     font-weight: 600 !important;
+    margin-bottom: 0.8rem;
   }
 }
 
@@ -246,9 +248,8 @@ a.anchor:hover {
   opacity: 1;
 }
 
-/* 코드 블록 스타일 */
-pre[data-theme] {
-  background-color: #0d1117; /* github-dark와 유사한 배경 */
+/* 코드 블록 */
+pre {
   padding: 1.25rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -256,20 +257,13 @@ pre[data-theme] {
   font-size: 0.875rem;
 }
 
-/* 코드 텍스트 */
-code[data-theme] {
-  color: #c9d1d9; /* github-dark 기본 텍스트 색 */
-  line-height: 1.6;
-}
-
-/* 한 줄 스타일 */
+/* 코드 라인 */
 span.line {
   display: block;
   padding-left: 1rem;
   position: relative;
 }
 
-/* 줄 번호 (옵션) */
 span.line[data-line-number]::before {
   content: attr(data-line-number);
   position: absolute;
@@ -281,7 +275,6 @@ span.line[data-line-number]::before {
   opacity: 0.5;
 }
 
-/* 강조 줄 (optional: rehype-pretty-code에서 지정 시) */
 span.line.highlighted {
   background-color: rgba(255, 255, 255, 0.1);
   border-left: 2px solid #58a6ff;
