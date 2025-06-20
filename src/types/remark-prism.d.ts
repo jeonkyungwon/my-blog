@@ -1,4 +1,5 @@
 declare module "remark-prism" {
-  const plugin: any;
+  import type { Pluggable } from "unified";
+  const plugin: Pluggable;
   export default plugin;
 }
