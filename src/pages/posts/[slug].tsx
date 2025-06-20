@@ -56,10 +56,10 @@ export default function PostPage({
             )}
           </div>
 
-          {/* 모바일 전용 목차 */}
+          {/* 모바일 전용 목차
           <div className="block xl:hidden mb-8">
             <TableOfContents toc={toc} />
-          </div>
+          </div> */}
 
           {/* 본문 내용 */}
           <article className="prose max-w-none">
