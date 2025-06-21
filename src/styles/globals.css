@@ -202,11 +202,12 @@ body {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #dce9f5;
+    background-color: #c0c0c0;
     opacity: 0.8;
   }
   .dark hr::before {
-    background-color: #062745;
+    background-color: #c0c0c0;
+    opacity: 0.4;
   }
 
   .prose h1,
