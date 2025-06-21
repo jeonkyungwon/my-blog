@@ -38,11 +38,8 @@ export default function PostPage({
   return (
     <>
       <div className="relative">
-        {/* 본문 */}
         <div className="max-w-3xl mx-auto px-4 py-16">
-          {/* 제목 */}
           <h1 className="text-4xl font-bold mb-8">{title}</h1>
-
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-32">
             {frontmatter.tags && frontmatter.tags[0] && (
               <span className="text-blue-500 font-semibold">
@@ -56,13 +53,11 @@ export default function PostPage({
             )}
           </div>
 
-          {/* 본문 내용 */}
           <article className="prose max-w-none">
             <MdxContentLayout>
               <MDXRemote {...source} components={{ CustomNote }} />
             </MdxContentLayout>
 
-            {/* 이전/다음 글 */}
             <div className="flex justify-between items-start w-full mt-12 pt-4 border-t-4 border-border ">
               {prev ? (
                 <div className="max-w-sm">
@@ -95,7 +90,6 @@ export default function PostPage({
           </article>
         </div>
 
-        {/* 데스크탑 전용 목차 */}
         <div className="hidden xl:block fixed top-24 right-12 w-64 max-h-[80vh] overflow-auto">
           <TableOfContents toc={toc} />
         </div>

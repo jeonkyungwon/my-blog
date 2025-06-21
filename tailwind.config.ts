@@ -3,7 +3,7 @@ import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  darkMode: "class", // ✅ 클래스 기반 다크 모드
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
