@@ -5,11 +5,13 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Link from "next/link";
+import Head from "next/head";
 import MdxContentLayout from "@/components/mdx/MdxContentLayout";
 import TableOfContents from "@/components/TableOfContents";
 import CustomNote from "@/components/CustomNote";
 import { extractToc, TocItem } from "@/lib/toc";
 import { getAdjacentPosts } from "@/lib/posts";
+import { extractDescription } from "@/lib/seo"; // ✅ 유틸 추가
 import type { PostMeta } from "@/lib/posts";
 
 interface Frontmatter {
@@ -25,6 +27,7 @@ interface Props {
   prev: PostMeta | null;
   next: PostMeta | null;
   frontmatter: Frontmatter;
+  description: string; // ✅ 추가
 }
 
 export default function PostPage({
@@ -34,14 +37,31 @@ export default function PostPage({
   prev,
   next,
   frontmatter,
+  description,
 }: Props) {
   return (
     <>
+      {/* ✅ SEO 메타 태그 */}
+      <Head>
+        <title>{`${title} | Tech_won 블로그`}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={`${title} | Tech_won 블로그`} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:url"
+          content={`https://jeonkyungwon-tech-blog.vercel.app/posts/${title}`}
+        />
+        <meta
+          property="og:image"
+          content="https://jeonkyungwon-tech-blog.vercel.app/og-image.png"
+        />
+      </Head>
+
       <div className="relative">
         <div className="max-w-3xl mx-auto px-4 py-16">
           <h1 className="text-4xl font-bold mb-8">{title}</h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-32">
-            {frontmatter.tags && frontmatter.tags[0] && (
+            {frontmatter.tags?.[0] && (
               <span className="text-blue-500 font-semibold">
                 {frontmatter.tags[0]}
               </span>
@@ -58,7 +78,7 @@ export default function PostPage({
               <MDXRemote {...source} components={{ CustomNote }} />
             </MdxContentLayout>
 
-            <div className="flex justify-between items-start w-full mt-12 pt-4 border-t-4 border-border ">
+            <div className="flex justify-between items-start w-full mt-12 pt-4 border-t-4 border-border">
               {prev ? (
                 <div className="max-w-sm">
                   <div className="text-sm text-muted-foreground">← 이전 글</div>
@@ -128,6 +148,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const toc = extractToc(content);
   const title = data.title ?? slug;
+  const description = data.description ?? extractDescription(content); // ✅ 자동 설명 추출
   const { prev, next } = getAdjacentPosts(slug);
 
   return {
@@ -142,6 +163,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         date: data.date ?? null,
         tags: data.tags ?? [],
       },
+      description,
     },
   };
 };
