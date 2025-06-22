@@ -110,7 +110,10 @@ export default function PostPage({
           </article>
         </div>
 
-        <div className="hidden xl:block fixed top-24 right-12 w-64 max-h-[80vh] overflow-auto">
+        <div
+          className="hidden xl:block fixed top-32 w-64 max-h-[80vh] overflow-auto"
+          style={{ right: "calc((100% - 768px)/2 - 320px)" }}
+        >
           <TableOfContents toc={toc} />
         </div>
       </div>

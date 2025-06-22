@@ -11,7 +11,7 @@ export default function TableOfContents({ toc }: Props) {
 
   return (
     <aside className="text-sm sticky top-24 space-y-3">
-      <ul className="space-y-1">
+      <ul className="space-y-2">
         {toc.map((item) => (
           <li key={item.id} className={item.level === 3 ? "ml-4" : ""}>
             <a
