@@ -1,5 +1,5 @@
 ---
-title: "Next.js 기반 블로그 개발"
+title: "Next.js로 블로그 개발"
 date: "2025-06-23"
 description: "Next.js+Tailwind로 Tech 블로그 개발하기"
 image: "/images/blog-thumbnail.png"
@@ -27,7 +27,7 @@ Tech 블로그 개발이 저의 부족한 부분을 채워줄 수 있다고 생�
 
 <br />
 
-### 1-1) 기능 정리
+### 1-1. 기능 정리
 
 - 우선 블로그에 꼭 필요한 필수 기능을 우선적으로 구현하기로 했습니다.
 - 댓글 기능 같은 부가적인 기능은 추후에 업데이트할 예정입니다.
@@ -59,6 +59,7 @@ Tech 블로그 개발이 저의 부족한 부분을 채워줄 수 있다고 생�
 
 - 🔹MDX 기반 콘텐츠 렌더링
 - 🔹제목, 태그, 작성일 표시
+- 🔹목차 사이드바(TOC)
 
 <br />
 
@@ -81,8 +82,9 @@ Tech 블로그 개발이 저의 부족한 부분을 채워줄 수 있다고 생�
 
 <br />
 <br />
+<br />
 
-### 1-2) 기술 스택 선정
+### 1-2. 기술 스택 선정
 
 블로그 개발 프로젝트를 계획하며 기술 스택 선정 과정을 가졌습니다.
 개인 프로젝트인 만큼 내가 부족한 부분을 채우는 것이 목적이었기 때문에,
@@ -194,10 +196,198 @@ UI 컴포넌트 라이브러리입니다.
 <br />
 <br />
 
-정적 웹사이트 및 서버리스 함수를 배포하고 관리하는 데 사용되는 배포 플랫폼입니다.
-Next.js는 Vercel에서 만든 프레임워크라서 호환성이 매우 높습니다.
-추가로 Github repository를 연동해두면 CI/CD 자동 배포 파이프라인도 자동으로 구축되기 때문에 편리하게 개발할 수 있습니다.
+Vercel은 Next.js의 공식 배포 플랫폼으로, Next.js 프로젝트를 가장 쉽고 안정적으로
+배포할 수 있는 환경을 제공합니다.
+
+<br />
+
+- -> **GitHub와 연동해 커밋만으로 자동 배포**가 가능해 CI/CD 구성이 간편하며, 개발-배포 사이클을
+  빠르게 반복할 수 있습니다.
+- -> 전 세계에 분산된 CDN을 통해 빠른 응답 속도를 제공하며,
+  정적 파일과 이미지 최적화도 자동으로 처리됩니다.
+- -> 특히 **Next.js와 궁합이 뛰어나** SSR, SSG 등의 렌더링 방식도 지원합니다.
+- -> 또한 무료 요금제가 제공되기 때문에, 사이드 프로젝트에 적합하다고 판단했습니다.
 
 <hr />
 
 ## 2. 개발 환경 세팅
+
+- 개발 초기에는 프로젝트 구조 설계와 기본 도구 설치 및 세팅을 진행했습니다.
+- 참고로 윈도우로 진행했습니다!
+
+<br />
+<br />
+
+### 2-1. 기본 패키치 설치
+
+```bash
+npx create-next-app@latest --typescript
+```
+
+- -> TypeScript 기반의 Next.js 프로젝트 생성
+
+<br />
+
+이후 필요한 주요 패키치 설치
+
+```bash
+npm install tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+npm install classnames gray-matter next-mdx-remote
+npm install @tailwindcss/typography
+npm install rehype-slug rehype-autolink-headings
+npm install next-themes
+```
+
+<br />
+
+- -> `gray-matter`: mdx의 frontmatter 파싱
+- -> `next-mdx-remote`: MDX 파일 렌더링
+- -> `rehype-slug`, `rehype-autolink-headings`: 목차 자동 생성
+- -> `next-themes`: 다크모드 적용
+
+<br />
+<br />
+<br />
+
+### 2-2. CSS 설정
+
+<br />
+
+<span className="text-2xl font-bold">Tailwind CSS 설정</span>
+
+<br />
+<br />
+
+tailwind.config.ts에서 다음과 같이 커스텀 설정을 적용했습니다.
+
+```ts
+theme: {
+  extend: {
+    fontFamily: {
+      sans: ["Pretendard", "sans-serif"],
+    },
+    typography: {
+      DEFAULT: {
+        css: {
+          a: { color: "#2563eb", fontWeight: "500" },
+          h1: { fontSize: "2.25rem", fontWeight: "700" },
+          h2: { fontSize: "1.875rem", fontWeight: "600" },
+        },
+      },
+    },
+  },
+},
+plugins: [require("@tailwindcss/typography")],
+```
+
+<br />
+<br />
+
+<span className="text-2xl font-bold">전역 스타일 설정</span>
+
+<br />
+<br />
+
+globals.css 파일에 Tailwind 기본 스타일과 추가적인 전역 스타일을 정의했습니다.
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Pretendard", sans-serif;
+}
+//...
+```
+
+<br />
+<br />
+<br />
+
+### 2-3. 폴더 구조 정리
+
+<br />
+
+폴더 구조는 다음과 같이 정리했습니다.
+
+```bash
+public/
+├── images          #favicon 및 썸네일 이미지 저장
+src/
+├── components/     # 공통 컴포넌트
+├── pages/          # 라우팅 경로
+├── posts/          # MDX 파일 저장
+├── styles/         # 글로벌 스타일 및 테마
+├── lib/            # 유틸 함수들 (toc, post 처리 등)
+├── types/          # TypeScript 타입
+```
+
+<br />
+<br />
+<br />
+
+### 2-4. MDX 렌더링 설정
+
+<br />
+
+- -> next.config.js는 별도로 mdx loader를 설치하지 않고 next-mdx-remote를 통해 서버에서 직렬화
+- -> getStaticProps와 getStaticPaths를 활용한 정적 생성
+
+<hr />
+
+## 3. 기능 구현
+
+간단하게 어떤 기능을 구현했는지 위주로 작성하겠습니다. 트러블 슈팅이나 보다 디테일한 내용은
+따로 빼서 정리할 예정입니다.
+
+<br />
+<br />
+
+### 3-1. 글 상세 페이지 렌더링
+
+<br />
+
+블로그에서 가장 핵심이 되는 글 상세 페이지를 먼저 구현했습니다.
+Markdown 기반이 아니라 **MDX**를 사용해, JSX 컴포넌트도 함께 사용할 수 있도록 했습니다.
+
+<br />
+
+<span className="bg-yellow-200 text-black inline-block">
+  블로그 글마다 커스텀 UI를 삽입하고 싶었고, 단순 텍스트뿐만 아니라 이미지,
+  코드블럭, 주석 등을 유연하게 표현하고자 MDX를 선택했습니다.
+</span>
+
+<br />
+<br />
+<br />
+
+<span className="text-2xl font-bold">구현 방식</span>
+
+<br />
+<br />
+
+- -> /posts/\*.mdx 파일로 콘텐츠를 작성하고 gray-matter로 frontmatter(titlte, date, tags 등) 파싱
+- -> getStaticPaths로 모든 글 경로를 미리 생성
+- -> next-mdx-remote로 .mdx 파일을 직렬화하여 SSR 렌더링
+- -> MdxContentLayout로 통일된 스타일 적용
+
+```tsx
+const mdxSource = await serialize(content, {
+  mdxOptions: {
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+  },
+});
+```
+
+### 3-2. 다크/라이트 모드 전환 기능
+
+<br />
+
+<br />
