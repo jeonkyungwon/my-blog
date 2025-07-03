@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://jeonkyungwon-tech-blog.vercel.app
+
+# Sitemaps
+Sitemap: https://jeonkyungwon-tech-blog.vercel.app/sitemap.xml
