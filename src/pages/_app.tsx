@@ -10,6 +10,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Tech_won</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="google-site-verification"
+          content="Aybd-Sw4kmIAOgZ0EnbIqskK_dK0wR7UomChlxFcCT0"
+        />
       </Head>
       <Layout>
         <Component {...pageProps} />
